@@ -87,19 +87,38 @@ class CodePreprocessor:
         df[f"{column}_tokens"] = df[column].apply(self.tokenize)
         return df
     
-    def balance_dataset(self, df: pd.DataFrame, n_samples_per_class: int = None) -> pd.DataFrame:
+    def balance_dataset(self, df: pd.DataFrame, n_samples_per_class: int = None, min_samples_per_class: int = 2) -> pd.DataFrame:
         """
         Балансирует датасет, уравнивая количество примеров в каждом классе.
+        
+        Параметры:
+            df: DataFrame с данными
+            n_samples_per_class: целевое количество примеров на класс
+            min_samples_per_class: минимальное количество примеров для сохранения класса
         """
         print("Балансировка датасета...")
         
         # Определяем максимальное количество样本 на класс
         class_counts = df["language"].value_counts()
         
+        # Удаляем классы с слишком малым количеством примеров
+        valid_classes = class_counts[class_counts >= min_samples_per_class].index
+        if len(valid_classes) != len(class_counts):
+            removed = set(class_counts.index) - set(valid_classes)
+            print(f"Удаляются классы с менее чем {min_samples_per_class} примерами: {removed}")
+            df = df[df["language"].isin(valid_classes)]
+            class_counts = df["language"].value_counts()
+        
+        if len(class_counts) == 0:
+            raise ValueError("Нет классов с достаточным количеством примеров для обучения")
+        
         if n_samples_per_class is None:
             n_samples_per_class = min(class_counts)
         else:
             n_samples_per_class = min(n_samples_per_class, min(class_counts))
+        
+        # Гарантируем минимум 2 примера на класс для stratify
+        n_samples_per_class = max(n_samples_per_class, min_samples_per_class)
         
         print(f"Каждый класс будет содержать {n_samples_per_class} примеров")
         
@@ -144,7 +163,7 @@ class CodePreprocessor:
         print(f"После фильтрации: {len(df)} примеров")
         
         # 3. Балансировка
-        df = self.balance_dataset(df, n_samples_per_class=400)
+        df = self.balance_dataset(df, n_samples_per_class=400, min_samples_per_class=2)
         
         # 4. Кодирование меток
         print("\n2. Кодирование меток...")

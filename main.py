@@ -36,7 +36,7 @@ def main():
     
     # 1. Сбор данных
     print("\n[ШАГ 1/5] Сбор данных...")
-    df = collect_data(source="synthetic")
+    df = collect_data(source="kaggle")
     print(f"Собрано {len(df)} примеров")
     print(f"Распределение:\n{df['language'].value_counts()}")
     
