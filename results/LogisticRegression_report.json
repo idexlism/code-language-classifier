@@ -1,0 +1,7 @@
+{
+  "model": "LogisticRegression",
+  "accuracy": 1.0,
+  "f1_macro": 1.0,
+  "f1_weighted": 1.0,
+  "classification_report": "              precision    recall  f1-score   support\n\n         cpp       1.00      1.00      1.00        80\n          go       1.00      1.00      1.00        80\n     htmlcss       1.00      1.00      1.00        80\n        java       1.00      1.00      1.00        80\n  javascript       1.00      1.00      1.00        80\n      python       1.00      1.00      1.00        80\n        rust       1.00      1.00      1.00        80\n         sql       1.00      1.00      1.00        80\n\n    accuracy                           1.00       640\n   macro avg       1.00      1.00      1.00       640\nweighted avg       1.00      1.00      1.00       640\n"
+}

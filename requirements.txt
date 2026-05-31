@@ -1,0 +1,20 @@
+# Основные библиотеки
+pandas>=2.0.0
+numpy>=1.24.0
+scikit-learn>=1.3.0
+nltk>=3.8.1
+regex>=2023.8.22
+requests>=2.31.0
+
+# Для продвинутой модели
+transformers>=4.35.0
+torch>=2.1.0
+datasets>=2.14.0
+
+# Визуализация
+matplotlib>=3.8.0
+seaborn>=0.13.0
+
+# Дополнительно
+tqdm>=4.66.0
+jupyter>=1.0.0
